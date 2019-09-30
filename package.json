@@ -1,0 +1,37 @@
+{
+  "name": "clasesvirtuales",
+  "version": "0.0.1",
+  "description": "Programa para clases virtuales, frontend creado en angular 8 y backend en node, con mysql",
+  "main": "app.js",
+  "scripts": {
+    "tsc": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lvalerab/clasesvirtuales.git"
+  },
+  "keywords": [
+    "WebSockets",
+    "Angular",
+    "node",
+    "mongodb"
+  ],
+  "author": "Luis Fernando Valera Bernal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lvalerab/clasesvirtuales/issues"
+  },
+  "homepage": "https://github.com/lvalerab/clasesvirtuales#readme",
+  "dependencies": {
+    "@types/bluebird": "^3.5.27",
+    "@types/node": "^12.7.8",
+    "@types/validator": "^10.11.3",
+    "angular-cli": "^1.0.0-beta.28.3",
+    "colors": "^1.4.0",
+    "express": "^4.17.1",
+    "mysql2": "^1.7.0",
+    "sequelize": "^5.19.1",
+    "typescript": "^3.6.3"
+  }
+}
