@@ -1,28 +1,23 @@
-import {Model, DataTypes} from 'sequelize';
+import {AutoIncrement, Column, DataType, HasAssociation, HasMany, HasOne, Model, PrimaryKey, Table, Length} from "sequelize-typescript";
+import { DataTypes } from "sequelize/types";
 
-export class Usuario extends Model {
-    public Id!: number;
-    public Nombre!:string;
-    public Email!:string;
-    public ValidateWithGoogle!:boolean; 
-    
-    public static Estructura:any={
-        Id:{
-            type:DataTypes.INTEGER.UNSIGNED,
-            autoIncrement:true,
-            primaryKey:true
-        },
-        Nombre:{
-            type:DataTypes.STRING(60),
-            allowNull:false
-        },
-        Email:{
-            type:DataTypes.STRING(255),
-            uniqueIndex:true
-        },
-        ValidateWithGoogle: {
-            type:DataTypes.BOOLEAN,
-            defaultValue:false
-        }
-    };
-};
+@Table({
+    modelName:"USUA_USUARIOS"
+})
+export class Usuario extends Model<Usuario> {
+    @Column({
+        type: DataType.INTEGER,
+        comment: "Clave principal",
+        autoIncrement: true,
+        primaryKey: true,
+        field:"ID"
+    })
+    id!: number;
+
+    @Column({
+        type:DataType.STRING(60),
+        comment:"Nombre del usuario",
+        field:"USER_NAME"        
+    })   
+    nombre!:string;
+}

@@ -2,9 +2,11 @@
   "name": "clasesvirtuales",
   "version": "0.0.1",
   "description": "Programa para clases virtuales, frontend creado en angular 8 y backend en node, con mysql",
-  "main": "app.js",
+  "main": "build/app.js",
   "scripts": {
-    "tsc": "tsc",
+    "build": "tsc",
+    "prestart": "npm run build",
+    "start": "node .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -30,8 +32,13 @@
     "angular-cli": "^1.0.0-beta.28.3",
     "colors": "^1.4.0",
     "express": "^4.17.1",
+    "mariadb": "^2.1.1",
     "mysql2": "^1.7.0",
     "sequelize": "^5.19.1",
+    "sequelize-typescript": "^1.0.0",
     "typescript": "^3.6.3"
+  },
+  "devDependencies": {
+    "tslint": "^5.20.0"
   }
 }
