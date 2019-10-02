@@ -4,5 +4,6 @@ import colors from "colors";
 import "./server/config/config";
 // require("./server/models/database");
 import "./server/models/database";
+import "./server/server";
 
 console.log(colors.red(`Iniciado`));
