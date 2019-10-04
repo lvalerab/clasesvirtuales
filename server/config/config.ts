@@ -14,9 +14,9 @@
  process.env.DB_TYPE = process.env.DB_TYPE || "mariadb"; // Puede ser mysql, sqlite, postgres y Ms Server, ver sequlize
 
  // User
- process.env.DB_USER = process.env.DB_USER || "TUTV";
+ process.env.DB_USER = process.env.DB_USER || "root";
  // Password
- process.env.DB_PASS = process.env.DB_PASS || "localPWD$$";
+ process.env.DB_PASS = process.env.DB_PASS || "1234";
  // Host
  process.env.DB_HOST = process.env.DB_HOST || "localhost";
  // Puerto
