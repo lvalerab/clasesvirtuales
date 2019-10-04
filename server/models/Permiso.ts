@@ -4,7 +4,7 @@ import {RelacionGrupoPermisoPermiso} from './RelacionGrupoPermisoPermiso';
 import { Col } from "sequelize/types/lib/utils";
 
 @Table({
-    modelName:"PERM_PERMISOS"
+    modelName:"perm_permisos"
 })
 export class Permiso extends Model<Permiso> {
     @Column({

@@ -3,7 +3,7 @@ import { GrupoPermiso } from "./GrupoPermiso";
 import { Permiso } from "./Permiso";
 
 @Table({
-    modelName:"GRPE_GRPE_PERM"
+    modelName:"grpe_grpe_perm"
 })
 export class RelacionGrupoPermisoPermiso extends Model<RelacionGrupoPermisoPermiso> {
     @ForeignKey(()=>GrupoPermiso)

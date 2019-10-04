@@ -5,7 +5,7 @@ import { Permiso } from "./Permiso"
 import { Usuario } from "./Usuarios";
 
 @Table({
-    modelName:"ACCI_ACCIONES"
+    modelName:"acci_acciones"
 })
 export class Accion extends Model<Accion> {
     @Column({

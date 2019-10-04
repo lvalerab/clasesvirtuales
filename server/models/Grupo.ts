@@ -1,7 +1,7 @@
 import {AutoIncrement, Column, DataType, HasAssociation, HasMany, HasOne, Model, PrimaryKey, Table, Length} from "sequelize-typescript";
 
 @Table({
-    modelName:"GRUP_GRUPOS"
+    modelName:"grup_grupos"
 })
 export class Grupo extends Model<Grupo> {
     @Column({

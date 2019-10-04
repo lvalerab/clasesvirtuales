@@ -2,7 +2,7 @@ import {AutoIncrement, Column, DataType, HasAssociation, HasMany, HasOne, Model,
 
 
 @Table({
-    modelName:"USUA_USUARIOS"
+    modelName:"usua_usuarios"
 })
 export class Usuario extends Model<Usuario> {
     @Column({
