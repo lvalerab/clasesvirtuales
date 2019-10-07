@@ -5,10 +5,11 @@ import {Sequelize} from "sequelize-typescript";
 /*Importamos los modelos*/
 import { Usuario } from "./usuarios";
 import { Grupo } from "./Grupo";
+import { GrupoUsuario } from "./GrupoUsuario";
 import { Permiso} from "./Permiso";
 import { GrupoPermiso } from "./GrupoPermiso";
 import { RelacionGrupoPermisoPermiso } from "./RelacionGrupoPermisoPermiso";
-import { Accion } from "./Acciones";
+import { Accion } from "./Accion";
 
 // const cadenaConexion = `${process.env.DB_TYPE}://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_BBDD}`;
 
@@ -24,6 +25,7 @@ const sequelize = new Sequelize(Conexion);
 const modelos=[
     Usuario,
     Grupo,
+    GrupoUsuario,
     Permiso,
     GrupoPermiso,
     RelacionGrupoPermisoPermiso,

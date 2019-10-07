@@ -1,4 +1,4 @@
-import {AutoIncrement, Column, DataType, HasAssociation, HasMany, HasOne, Model, PrimaryKey, Table, Length, BelongsToMany, ForeignKey} from "sequelize-typescript";
+import {AutoIncrement, Column, DataType, HasAssociation, HasMany, HasOne, Model, PrimaryKey, Table, Length, BelongsToMany, ForeignKey, AllowNull} from "sequelize-typescript";
 import {Grupo} from './Grupo';
 import { GrupoPermiso } from "./GrupoPermiso";
 import { Permiso } from "./Permiso"
@@ -21,14 +21,27 @@ export class Accion extends Model<Accion> {
     @Column({
         type:DataType.STRING(10),
         comment:"Codigo del grupo de personas",
-        field:"COD_GRUP"
+        field:"COD_GRUP",
+        unique:"UK_ACCI_GRUP_GRPE_PERM_USUA",
+        allowNull:true
     })
     codigoGrupo!:string;
+
+    @ForeignKey(()=>Usuario)
+    @Column({
+        type:DataType.INTEGER,
+        comment:"Id del usuario",
+        field:"ID_USUA",
+        unique:"UK_ACCI_GRUP_GRPE_PERM_USUA",
+        allowNull:true
+    })
+    idUsuario!:number;
 
     @ForeignKey(()=>GrupoPermiso)
     @Column({
         type:DataType.STRING(10),
         comment:"Codigo del grupo de permisos",
+        unique:"UK_ACCI_GRUP_GRPE_PERM_USUA",
         field:"COD_GRPE"
     })
     codigoGrupoPermiso!:string;
@@ -37,15 +50,10 @@ export class Accion extends Model<Accion> {
     @Column({
         type:DataType.STRING(10),
         comment:"Codigo permiso",
+        unique:"UK_ACCI_GRUP_GRPE_PERM_USUA",
         field:"COD_PERM"
     })
     codigoPermiso!:string;
 
-    @ForeignKey(()=>Usuario)
-    @Column({
-        type:DataType.INTEGER,
-        comment:"Id del usuario",
-        field:"ID_USUA"
-    })
-    idUsuario!:number;
+   
 }
