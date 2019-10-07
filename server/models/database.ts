@@ -17,7 +17,11 @@ const Conexion: any = {
     database: process.env.DB_BBDD,
     dialect: process.env.DB_TYPE,
     username: process.env.DB_USER,
-    password: process.env.DB_PASS
+    password: process.env.DB_PASS,
+    dialectOptions:{
+        useUTC:false //para leer el time zone de la base de datos
+    },
+    timezone:'Etc/GMT0'
 };
 
 const sequelize = new Sequelize(Conexion);
@@ -40,8 +44,11 @@ sequelize
     .authenticate()
     .then(() => {
         console.log(colors.green.bgBlue("Se ha conectado con éxito"));
+        console.log(colors.red.bgBlue("******************************************"));
+        console.log(colors.red.bgBlue("*INICIANDO MANTENIMINETO DE BASE DE DATOS*"));
+        console.log(colors.red.bgBlue("******************************************"));
         for(let i=0;i<modelos.length;i++) {
-            console.log(colors.white.bgYellow(`Inicializando el modelo ${modelos[i].name}`))
+            console.log(colors.green.bgBlue(`Inicializando el modelo ${modelos[i].name}`))
             try {
                 modelos[i].sync();
             } catch(err) {

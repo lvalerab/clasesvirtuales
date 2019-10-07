@@ -18,3 +18,6 @@ https://sequelize.org/ (Para el ORM)
 https://momentjs.com/ (Para la gestion de variables temporales)
 https://socket.io/ (Para los websockets)
 https://expressjs.com/ (Servidor HTTP)
+
+
+Usamos los decoradores de overnightjs (https://www.npmjs.com/package/@overnightjs/core)
