@@ -4,11 +4,15 @@ import { JwtManager, ISecureRequest } from '@overnightjs/jwt';
 import Bluebird = require('bluebird');
 const bcrypt=require('bcrypt');
 import { Usuario } from '../../../models/usuarios';
+import { TimingMiddleWare } from '../../../middleware/timing';
+import { LogMiddleWare } from '../../../middleware/logs';
+import { PermisosMiddleWare } from '../../../middleware/permisos';
 require('../../../config/config');
 
 @Controller('v1/Usuarios')
 export class UsuariosController {
     @Get()
+    @Middleware([TimingMiddleWare.InsertTimeRequest,LogMiddleWare.LogPeticion])
     private get(req:Request, res:Response) {
         Usuario.findAll({
             attributes:['id','nombre','mail','createdAt','updatedAt']
@@ -30,6 +34,7 @@ export class UsuariosController {
     }
 
     @Get(':id')
+    @Middleware([TimingMiddleWare.InsertTimeRequest,LogMiddleWare.LogPeticion])
     private GetID(req:Request, res:Response) {
         let id:any=Number(req.params.id);
         Usuario.findOne({
@@ -64,6 +69,7 @@ export class UsuariosController {
     }
 
     @Post('validate')
+    @Middleware([TimingMiddleWare.InsertTimeRequest,LogMiddleWare.LogPeticion])
     private Validate(req:Request,res:Response) {
         Usuario.findOne({
             where:{
@@ -106,6 +112,7 @@ export class UsuariosController {
     }
 
     @Post() 
+    @Middleware([TimingMiddleWare.InsertTimeRequest,LogMiddleWare.LogPeticion])
     private async NewUsuario(req:Request,res:Response) {
         console.log(req.body);        
         bcrypt.hash(req.body.password, Number(process.env.ALM_PAWSS_SALT), function(err:any, hash:any) {
@@ -151,7 +158,7 @@ export class UsuariosController {
     }
 
     @Put()
-    @Middleware(JwtManager.middleware)
+    @Middleware([JwtManager.middleware,TimingMiddleWare.InsertTimeRequest,LogMiddleWare.LogPeticion, PermisosMiddleWare.GetGroupsUserValidate])
     private UpdateUser(req:ISecureRequest,res:Response) {
         let User:any={
             id:req.body.id,
