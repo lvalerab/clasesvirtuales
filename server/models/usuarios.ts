@@ -24,7 +24,8 @@ export class Usuario extends Model<Usuario> {
     @Column({
         type:DataType.STRING(255),
         comment:"Mail del usuario",
-        field:"USER_MAIL"
+        field:"USER_MAIL",
+        unique:"UX_MAIL_USER"
     })
     mail!:string;
 
