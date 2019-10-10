@@ -1,9 +1,10 @@
+import {Request, Response, NextFunction } from 'express';
 import * as fs from 'fs';
 import path from 'path';
 require('../config/config');
 
 export class LogMiddleWare {
-    static LogPeticion(req:any, res:any, next:any) {
+    static LogPeticion(req:Request, res:Response, next:NextFunction) {
         console.log("Entra al middleware de logs");
         let ruta=path.resolve(__dirname, process.env.RUTA_REL_LOG?process.env.RUTA_REL_LOG:"../logs");
         fs.exists(ruta,(existe)=> {
@@ -16,8 +17,12 @@ export class LogMiddleWare {
                     console.log(`Error al escribir el log ${err.message}`);
                 } else {
                     fs.writeSync(fd,"============== PETICION ==================\n");
-                    //fs.writeSync(fd,JSON.stringify(req));
-                    //fs.writeSync(fd,JSON.stringify(res));
+                    fs.writeSync(fd,"PARAMS:");
+                    fs.writeSync(fd,JSON.stringify(req.params));
+                    fs.writeSync(fd,"HEADERS:")
+                    fs.writeSync(fd,JSON.stringify(req.headers));
+                    fs.writeSync(fd,"BODY:");
+                    fs.writeSync(fd,JSON.stringify(req.body));
                     fs.writeSync(fd,"==============  FIN PETICION ==================\n");
                     fs.closeSync(fd);
                 }

@@ -1,4 +1,4 @@
-import {AutoIncrement, Column, DataType, HasAssociation, HasMany, HasOne, Model, PrimaryKey,ForeignKey, Table, Length, BelongsToMany} from "sequelize-typescript";
+import {AutoIncrement, Column, DataType, HasAssociation, HasMany, HasOne, Model, PrimaryKey,ForeignKey, Table, Length, BelongsToMany, BelongsTo} from "sequelize-typescript";
 import { Grupo } from "./Grupo";
 import { Usuario } from "./usuarios";
 
@@ -15,6 +15,9 @@ export class GrupoUsuario extends Model<GrupoUsuario> {
     })
     codGrupo!:string;
 
+    @BelongsTo(()=>Grupo)
+    grupo!:Grupo;
+
     @ForeignKey(()=>Usuario)
     @Column({
         type:DataType.INTEGER,
@@ -23,4 +26,7 @@ export class GrupoUsuario extends Model<GrupoUsuario> {
         unique:"UX_GRUPO_USUARIO"
     })
     idUsua!:number;
+    
+    @BelongsTo(()=>Usuario)
+    usuario!:Usuario;
 }

@@ -1,4 +1,4 @@
-import {AutoIncrement, Column, DataType, HasAssociation, HasMany, HasOne, Model, PrimaryKey, Table, Length, BelongsToMany, ForeignKey} from "sequelize-typescript";
+import {AutoIncrement, Column, DataType, HasAssociation, HasMany, HasOne, Model, PrimaryKey, Table, Length, BelongsToMany, ForeignKey, BelongsTo} from "sequelize-typescript";
 import { GrupoPermiso } from "./GrupoPermiso";
 import { Permiso } from "./Permiso";
 import { Usuario } from "./usuarios";
@@ -16,6 +16,9 @@ export class RelacionGrupoPermisoPermiso extends Model<RelacionGrupoPermisoPermi
     })
     cod_grpe!:string;
 
+    @BelongsTo(()=>GrupoPermiso)
+    grupoPermiso!:GrupoPermiso;
+
     @ForeignKey(()=>Permiso)
     @Column({
         type:DataType.STRING(10),
@@ -24,4 +27,7 @@ export class RelacionGrupoPermisoPermiso extends Model<RelacionGrupoPermisoPermi
         unique:'PK_GRPE_GRPE_PERM'
     })
     cod_perm!:string;
+
+    @BelongsTo(()=>Permiso)
+    permiso!:Permiso;
 }

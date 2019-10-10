@@ -11,16 +11,28 @@ require('../../../config/config');
 
 @Controller('v1/Usuarios')
 export class UsuariosController {
-    @Get()
+
+    /*
+    Obtiene los usuarios
+    */
+    @Get(':page/:items')
     @Middleware([TimingMiddleWare.InsertTimeRequest,LogMiddleWare.LogPeticion])
     private get(req:Request, res:Response) {
-        Usuario.findAll({
-            attributes:['id','nombre','mail','createdAt','updatedAt']
-        }).then((usuarios:Usuario[]) => {
+        Usuario.findAndCountAll({
+            attributes:['id','nombre','mail','createdAt','updatedAt'],
+            offset: Number(req.params.page)*Number(req.params.items),
+            limit:Number(req.params.items)
+        }).then((result) => {
+
             res.status(200).json({
                 ok:true,
                 resultado:{
-                    usuarios
+                    paginador:{
+                        page:Number(req.params.page),
+                        elements:Number(req.params.items),
+                        total:result.count
+                    },                    
+                    usuarios:result.rows
                 }
             });
         }).catch((err)=> {
@@ -33,6 +45,9 @@ export class UsuariosController {
         });
     }
 
+    /*
+        Obtiene los datos de un usuario dado
+    */
     @Get(':id')
     @Middleware([TimingMiddleWare.InsertTimeRequest,LogMiddleWare.LogPeticion])
     private GetID(req:Request, res:Response) {
@@ -68,6 +83,9 @@ export class UsuariosController {
         });
     }
 
+    /*
+    Valida los datos de un usuario y genera un token
+    */
     @Post('validate')
     @Middleware([TimingMiddleWare.InsertTimeRequest,LogMiddleWare.LogPeticion])
     private Validate(req:Request,res:Response) {
@@ -111,6 +129,9 @@ export class UsuariosController {
         })
     }
 
+    /*
+    Crea un nuevo usuario
+    */
     @Post() 
     @Middleware([TimingMiddleWare.InsertTimeRequest,LogMiddleWare.LogPeticion])
     private async NewUsuario(req:Request,res:Response) {
@@ -157,6 +178,9 @@ export class UsuariosController {
         
     }
 
+    /*
+    Actualiza un usuario (ahora mismo debe ser el mismo que se identifica)
+    */
     @Put()
     @Middleware([JwtManager.middleware,TimingMiddleWare.InsertTimeRequest,LogMiddleWare.LogPeticion, PermisosMiddleWare.GetGroupsUserValidate])
     private UpdateUser(req:ISecureRequest,res:Response) {
@@ -170,7 +194,7 @@ export class UsuariosController {
             where:{
                 id:User.id
             }
-        }).then((usuarioDB)=> {
+        }).then(function (usuarioDB) {
             if(usuarioDB) {
                 if(usuarioDB.id==req.payload.id) {
                     usuarioDB.nombre=User.nombre;
@@ -184,14 +208,25 @@ export class UsuariosController {
                                     }
                                 })
                             } else {
-                                usuarioDB.password=bcrypt.hashSync(User.newPass,process.env.ALM_PAWSS_SALT);
-                                usuarioDB.save().then(usuarioAct=> {
-                                    res.status(200).json({
-                                        ok:true,
-                                        respuesta:{
-                                            usuario:usuarioAct
-                                        }
-                                    });
+                                bcrypt.hash(User.newPass, Number(process.env.ALM_PAWSS_SALT), function(err:any,hash:string) {
+                                    if(err) {
+                                        res.status(500).json({
+                                            ok:false,
+                                            respuesta:{
+                                                msg:err.message
+                                            }
+                                        });
+                                    } else {
+                                        usuarioDB.password=hash;
+                                        usuarioDB.save().then(usuarioAct=> {
+                                            res.status(200).json({
+                                                ok:true,
+                                                respuesta:{
+                                                    usuario:usuarioAct
+                                                }
+                                            });
+                                        });
+                                    }
                                 });
                             }
                         });
@@ -226,6 +261,82 @@ export class UsuariosController {
                 ok:false,
                 respuesta:{
                     msg:'Usuario no encontrado'
+                }
+            });
+        });
+    }
+
+    /*
+    Marca un usuario como eliminado
+    */
+    @Delete(':id/soft')
+    @Middleware([JwtManager.middleware,TimingMiddleWare.InsertTimeRequest,LogMiddleWare.LogPeticion, PermisosMiddleWare.GetGroupsUserValidate])
+    private DeleteSoftUser(req:ISecureRequest,res:Response) {
+        Usuario.findOne({
+            where:{
+                id:Number(req.params.id)
+            }
+        }).then(usuarioBD=> {
+            if(usuarioBD) {
+                usuarioBD.destroy();
+                res.status(200).json({
+                    ok:true,
+                    respuesta:{
+                        msg:'Usuario eliminado con éxito'
+                    }
+                });
+            } else {
+                res.status(404).json({
+                    ok:true,
+                    respuesta:{
+                        msg:'Usuario no encontrado'
+                    }
+                });
+            }
+        }).catch(err=> {
+            res.status(500).json({
+                ok:false,
+                respuesta:{
+                    msg:err.message
+                }
+            });
+        });
+    }
+
+    /*
+    Elimina definitivamente un usuario
+    */
+    @Delete(':id')
+    @Middleware([JwtManager.middleware,TimingMiddleWare.InsertTimeRequest,LogMiddleWare.LogPeticion, PermisosMiddleWare.GetGroupsUserValidate])
+    private DeleteUser(req:ISecureRequest,res:Response) {
+        Usuario.findOne({
+            where:{
+                id:Number(req.params.id)
+            }
+        }).then(usuarioBD=> {
+            if(usuarioBD) {
+                usuarioBD.destroy({
+                    force:true
+                });
+                res.status(200).json({
+                    ok:true,
+                    respuesta:{
+                        msg:'Usuario eliminado con éxito'
+                    }
+                });
+            } else {
+                res.status(404).json({
+                    ok:true,
+                    respuesta:{
+                        msg:'Usuario no encontrado'
+                    }
+                });
+            }
+        }).catch(err=> {
+            res.status(500).json({
+                ok:false,
+                respuesta:{
+                    msg:err.message
                 }
             });
         });

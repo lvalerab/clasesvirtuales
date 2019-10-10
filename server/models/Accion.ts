@@ -1,4 +1,4 @@
-import {AutoIncrement, Column, DataType, HasAssociation, HasMany, HasOne, Model, PrimaryKey, Table, Length, BelongsToMany, ForeignKey, AllowNull} from "sequelize-typescript";
+import {AutoIncrement, Column, DataType, HasAssociation, HasMany, HasOne, Model, PrimaryKey, Table, Length, BelongsToMany, ForeignKey, AllowNull, BelongsTo} from "sequelize-typescript";
 import {Grupo} from './Grupo';
 import { GrupoPermiso } from "./GrupoPermiso";
 import { Permiso } from "./Permiso"
@@ -27,6 +27,9 @@ export class Accion extends Model<Accion> {
     })
     codigoGrupo!:string;
 
+    @BelongsTo(()=>Grupo)
+    grupo!:Grupo;
+
     @ForeignKey(()=>Usuario)
     @Column({
         type:DataType.INTEGER,
@@ -37,6 +40,9 @@ export class Accion extends Model<Accion> {
     })
     idUsuario!:number;
 
+    @BelongsTo(()=>Usuario)
+    usuario!:Usuario;
+
     @ForeignKey(()=>GrupoPermiso)
     @Column({
         type:DataType.STRING(10),
@@ -45,6 +51,9 @@ export class Accion extends Model<Accion> {
         field:"COD_GRPE"
     })
     codigoGrupoPermiso!:string;
+
+    @BelongsTo(()=>GrupoPermiso)
+    grupoPermiso!:GrupoPermiso;
 
     @ForeignKey(()=>Permiso)
     @Column({
@@ -55,5 +64,7 @@ export class Accion extends Model<Accion> {
     })
     codigoPermiso!:string;
 
+    @BelongsTo(()=>Permiso)
+    permiso!:Permiso;
    
 }

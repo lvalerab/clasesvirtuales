@@ -18,10 +18,13 @@ const Conexion: any = {
     dialect: process.env.DB_TYPE,
     username: process.env.DB_USER,
     password: process.env.DB_PASS,
-    dialectOptions:{
-        useUTC:false //para leer el time zone de la base de datos
-    },
-    timezone:'Etc/GMT0'
+    define:{
+        timestamps:true,
+        dialectOptions:{
+            useUTC:false //para leer el time zone de la base de datos
+        },
+        timezone:'+02:00'
+    }   
 };
 
 const sequelize = new Sequelize(Conexion);

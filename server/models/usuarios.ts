@@ -1,5 +1,6 @@
-import {AutoIncrement, Column, DataType, HasAssociation, HasMany, HasOne, Model, PrimaryKey, Table, Length} from "sequelize-typescript";
-
+import {AutoIncrement, Column, DataType, HasAssociation, HasMany, HasOne, Model, PrimaryKey, Table, Length, BelongsToMany} from "sequelize-typescript";
+import {Accion} from './Accion';
+import {GrupoUsuario} from './GrupoUsuario';
 
 @Table({
     modelName:"usua_usuarios"
@@ -42,4 +43,10 @@ export class Usuario extends Model<Usuario> {
         field:"USER_LOGON_TYPE"
     })
     LogonType!:string;
+
+    @HasMany(()=>GrupoUsuario)
+    gruposUsuario!:GrupoUsuario[];
+   /*
+    @HasMany(()=>Accion)
+    acciones!:Accion[]; */
 }
