@@ -29,7 +29,7 @@ process.env.SERVER_NTP=process.env.SERVER_NTP||'hora.roa.es|150.214.94.5,minuto.
  process.env.REST_SERV_PORT=process.env.REST_SERV_PORT||"3000";
 
  process.env.REST_SERV_CERT_KEY=process.env.REST_SERV_CERT_KEY||'../../certs/localhost.pem';
- process.env.REST_SERV_CERT_KEY=process.env.REST_SERV_CERT_CRT||'../../certs/localhost.crt';
+ process.env.REST_SERV_CERT_CRT=process.env.REST_SERV_CERT_CRT||'../../certs/localhost.crt';
 
  //////////////////////////////////////////////////////////////
  // Cadena de conexion
