@@ -46,12 +46,12 @@ sequelize.addModels(
 sequelize
     .authenticate()
     .then(() => {
-        console.log(colors.green.bgBlue("Se ha conectado con éxito"));
-        console.log(colors.red.bgBlue("******************************************"));
-        console.log(colors.red.bgBlue("*INICIANDO MANTENIMINETO DE BASE DE DATOS*"));
-        console.log(colors.red.bgBlue("******************************************"));
+        console.log(colors.bgWhite.blue("Se ha conectado con éxito"));
+        console.log(colors.bgWhite.blue("******************************************"));
+        console.log(colors.bgWhite.blue("*INICIANDO MANTENIMINETO DE BASE DE DATOS*"));
+        console.log(colors.bgWhite.blue("******************************************"));
         for(let i=0;i<modelos.length;i++) {
-            console.log(colors.green.bgBlue(`Inicializando el modelo ${modelos[i].name}`))
+            console.log(colors.bgWhite.black(`Inicializando el modelo ${modelos[i].name}`))
             try {
                 modelos[i].sync();
             } catch(err) {
@@ -60,7 +60,7 @@ sequelize
             }
         }
     })
-    .catch(err=> {
-        console.log(colors.red.bgYellow("Error al conectarse a la base de datos."));
-        console.log(colors.red(`CAUSA: ${err.message}`));
+    .catch(err=> {        
+        console.log(colors.bgRed.yellow(("Error al conectarse a la base de datos.")));
+        console.log(colors.bgRed.yellow((`CAUSA: ${err.message}`)));
     });

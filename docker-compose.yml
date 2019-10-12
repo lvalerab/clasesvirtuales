@@ -1,21 +1,21 @@
 version: '3.4'
 services:
   #Backend del TUTV
-  tutv:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: backend_tutv
-    environment:
-      - REST_SERV_PORT=3000
-      - DB_TYPE=mariadb
-      - DB_USER=root
-      - DB_PASS=1234
-      - DB_HOST=127.0.0.1
-      - DB_PORT=3306
-      - DB_BBDD=TUTV
-    depends_on: 
-      - mariadb
+  #tutv:
+  #  build:
+  #    context: .
+  #    dockerfile: Dockerfile
+  #  container_name: backend_tutv
+  #  environment:
+  #    - REST_SERV_PORT=3000
+  #    - DB_TYPE=mariadb
+  #    - DB_USER=root
+  #    - DB_PASS=1234
+  #    - DB_HOST=127.0.0.1
+  #    - DB_PORT=3306
+  #    - DB_BBDD=TUTV
+  #  depends_on: 
+  #    - mariadb
   #Servicdor de base de datos
   mariadb:
     image: 'bitnami/mariadb:10.3'
