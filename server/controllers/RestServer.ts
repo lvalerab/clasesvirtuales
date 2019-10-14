@@ -1,10 +1,13 @@
 import * as bodyParser from 'body-parser';
 import {Server} from '@overnightjs/core';
 import { UsuariosController } from './v1/Usuarios/UsuariosController';
+import { GruposController } from './v1/Grupos/GruposController';
+import {TimingController} from './v1/Utils/TimeController';
 import fs from 'fs';
 import colors from 'colors';
 import path from 'path';
 import express from 'express';
+
 
 
 export class RestServer extends Server {
@@ -35,9 +38,13 @@ export class RestServer extends Server {
 
     private setupControllers():void {
         const usuarioController=new UsuariosController();
+        const gruposController=new GruposController();
+        const timingController=new TimingController();
 
         super.addControllers([
-            usuarioController
+            usuarioController,
+            gruposController,
+            timingController
         ]);
     }
 

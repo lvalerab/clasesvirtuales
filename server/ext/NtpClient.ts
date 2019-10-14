@@ -9,6 +9,13 @@ export class NtpServer {
                 }
 }
 
+export class NtpDateServer {
+    constructor(public server:NtpServer,
+                public date:Date) {
+
+                }
+}
+
 export class NtpClientHelper {
     public ntpServers!:Array<NtpServer>;
     constructor() {
@@ -31,6 +38,25 @@ export class NtpClientHelper {
            replyTimeout:40*1000
        })
        .getNetworkTime();
+    }
+
+    public getTimeAsync(ntpServer:NtpServer):Promise<NtpDateServer> {
+        let that=this;
+        return new Promise(function (accept,reject) {
+            that.getTime(ntpServer).then(function (date:any) {
+                accept(new NtpDateServer(ntpServer,date));
+            }).catch((err:any)=>{
+                reject(err);
+            });
+        });
+    }
+
+    public async getNtpServerTime():Promise<Array<NtpDateServer>> {
+        let resultado:Array<NtpDateServer>=new Array<NtpDateServer>();
+        for(let i=0;i<this.ntpServers.length;i++) {
+            resultado.push(await this.getTimeAsync(this.ntpServers[i]));
+        }
+        return resultado;
     }
 
     public getTimeFirst():any {
