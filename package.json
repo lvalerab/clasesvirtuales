@@ -27,7 +27,7 @@
   "homepage": "https://github.com/lvalerab/clasesvirtuales#readme",
   "dependencies": {
     "@overnightjs/core": "^1.6.9",
-    "@overnightjs/jwt": "^1.1.14",
+    "@overnightjs/jwt": "^1.2.1",
     "@overnightjs/logger": "^1.1.9",
     "@types/bluebird": "^3.5.27",
     "@types/express": "^4.17.1",
